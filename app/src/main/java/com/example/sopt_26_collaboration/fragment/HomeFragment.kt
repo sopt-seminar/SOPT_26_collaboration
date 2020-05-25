@@ -1,4 +1,4 @@
-package com.example.sopt_26_collaboration.Fragment
+package com.example.sopt_26_collaboration.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
