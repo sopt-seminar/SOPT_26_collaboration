@@ -7,4 +7,5 @@
     <!--for fragment_search-->
     <color name="normal_text_black">#333333</color>
     <color name="stroke_round_blue_ractangle">#2c5bf2</color>
+    <color name="normal_text_white">#ffffff</color>
 </resources>
