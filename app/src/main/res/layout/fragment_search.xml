@@ -41,7 +41,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/spinner_field_fragment_search"
                     app:layout_constraintStart_toEndOf="@+id/spinner_field_fragment_search"
                     app:layout_constraintTop_toTopOf="@+id/spinner_field_fragment_search"
-                    tools:text="분야에서" />
+                    android:text="분야에서" />
 
                 <TextView
                     android:id="@+id/textView2"
@@ -52,7 +52,7 @@
                     android:textSize="24sp"
                     app:layout_constraintStart_toStartOf="@+id/spinner_field_fragment_search"
                     app:layout_constraintTop_toBottomOf="@+id/textView"
-                    tools:text="어떤 직군에 관심있으신가요?" />
+                    android:text="어떤 직군에 관심있으신가요?" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintLayout"
@@ -87,6 +87,7 @@
                         android:lineSpacingExtra="3sp"
                         android:textColor="@color/normal_text_black"
                         android:textSize="14sp"
+                        android:background="@null"
                         app:layout_constraintBottom_toBottomOf="@+id/imageView2"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.024"
@@ -106,7 +107,7 @@
                     android:textSize="20sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-                    tools:text="가장 많이 찾아보는 직군" />
+                    android:text="가장 많이 찾아보는 직군" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -141,7 +142,7 @@
                     android:textSize="20sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:text="직군에 대해 더 알고싶어?" />
+                    android:text="직군에 대해 더 알고싶어?" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
