@@ -51,11 +51,11 @@ class SearchFragment : Fragment() {
     fun loadDatas()
     {
         duty_datas.apply {
-            add(DutyData(img=R.color.color_most_1, text="서버"))
-            add(DutyData(img=R.color.color_most_2, text="ios"))
-            add(DutyData(img=R.color.color_most_3, text="웹"))
-            add(DutyData(img=R.color.color_most_1, text="안드로이드"))
-            add(DutyData(img=R.color.color_most_2, text="자바"))
+            add(DutyData(img=R.drawable.an_search_most_1_img, text="서버"))
+            add(DutyData(img=R.drawable.an_search_most_2_img, text="ios"))
+            add(DutyData(img=R.drawable.an_search_most_3_img, text="웹"))
+            add(DutyData(img=R.drawable.an_search_most_1_img, text="안드로이드"))
+            add(DutyData(img=R.drawable.an_search_most_3_img, text="자바"))
         }
 
         dutyAdapter.datas = duty_datas

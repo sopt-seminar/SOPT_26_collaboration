@@ -14,6 +14,7 @@ class MainActivity : AppCompatActivity() {
     }
     fun init()
     {
+
         main_vp.adapter = MainPagerAdapter(supportFragmentManager)
         main_vp.offscreenPageLimit = 2
         main_vp.addOnPageChangeListener(object : ViewPager.OnPageChangeListener

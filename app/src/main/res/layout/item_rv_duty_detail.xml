@@ -42,6 +42,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/tv_duty_detail_1"
         android:text="개발자명,"
+        android:textStyle="bold"
         android:textSize="20sp"
         android:textColor="#ffffff"
         android:lineSpacingExtra="4sp"/>
@@ -53,6 +54,7 @@
             android:id="@+id/tv_duty_detail_2"
             android:text="이직할 때 고려할점"
             android:textSize="20sp"
+            android:textStyle="bold"
             android:textColor="#ffffff"
             android:lineSpacingExtra="4sp"/>
 

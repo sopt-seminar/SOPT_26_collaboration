@@ -11,18 +11,21 @@
 
      <style name = "SearchTitleText"> <!-- 검색창 타이틀 제목 -->
              <item name="android:textSize">24sp</item>
+            <item name="android:textStyle">bold</item>
              <item name="android:lineSpacingExtra">5sp</item>
              <item name="android:textColor">#2c5bf2</item>
          </style>
 
     <style name = "SearchTitleContentText"> <!-- 검색창 타이틀 기본내용 -->
         <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:lineSpacingExtra">5sp</item>
         <item name="android:textColor">#333333</item>
     </style>
 
     <style name = "SearchSubTitleText"> <!-- 검색창 기본 제목 -->
         <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:lineSpacingExtra">4sp</item>
         <item name="android:textColor">#333333</item>
         <item name="android:gravity">center_horizontal</item>

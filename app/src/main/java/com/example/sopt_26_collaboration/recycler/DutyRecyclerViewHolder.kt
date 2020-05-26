@@ -11,12 +11,13 @@ import kotlinx.android.synthetic.main.item_rv_duty.*
 
 class DutyRecyclerViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
 
-    val img = itemView.findViewById<TextView>(R.id.img_duty)
+    val img = itemView.findViewById<ImageView>(R.id.img_duty)
     val duty = itemView.findViewById<TextView>(R.id.tv_duty)
     val duty_content = itemView.findViewById<TextView>(R.id.tv_duty_content)
     fun bind(Data: DutyData)
     {
-        img.setBackgroundColor(Data.img)
+
+        img.setImageResource(Data.img)
         duty.text = Data.text
         duty_content.text = "개발자"
     }

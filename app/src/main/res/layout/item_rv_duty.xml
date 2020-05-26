@@ -6,10 +6,10 @@
 
 
 
-    <TextView
+    <ImageView
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:background="@drawable/icon_circle"
+        android:src="@drawable/icon_circle"
         android:id="@+id/img_duty"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -27,6 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="서버"
+        android:textStyle="bold"
         android:gravity="center"
         android:layout_gravity="center_horizontal"
         android:id="@+id/tv_duty"
@@ -38,6 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="개발자"
+        android:textStyle="bold"
         android:layout_gravity="center_horizontal"
         android:id="@+id/tv_duty_content"
         android:textColor="#ffffff"
