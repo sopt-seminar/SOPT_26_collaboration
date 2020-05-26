@@ -38,6 +38,7 @@
                     android:lineSpacingExtra="5sp"
                     android:textColor="@color/normal_text_black"
                     android:textSize="24sp"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/spinner_field_fragment_search"
                     app:layout_constraintStart_toEndOf="@+id/spinner_field_fragment_search"
                     app:layout_constraintTop_toTopOf="@+id/spinner_field_fragment_search"
@@ -50,6 +51,7 @@
                     android:lineSpacingExtra="5sp"
                     android:textColor="@color/normal_text_black"
                     android:textSize="24sp"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@+id/spinner_field_fragment_search"
                     app:layout_constraintTop_toBottomOf="@+id/textView"
                     android:text="어떤 직군에 관심있으신가요?" />
@@ -105,6 +107,7 @@
                     android:lineSpacingExtra="4sp"
                     android:textColor="@color/normal_text_black"
                     android:textSize="20sp"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
                     android:text="가장 많이 찾아보는 직군" />
@@ -140,6 +143,7 @@
                     android:lineSpacingExtra="4sp"
                     android:textColor="@color/normal_text_black"
                     android:textSize="20sp"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     android:text="직군에 대해 더 알고싶어?" />
