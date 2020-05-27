@@ -35,6 +35,7 @@
         android:layout_marginBottom="16dp"
         android:text="직군 설명"
         android:textSize="20sp"
+        android:textStyle="bold"
         android:textColor="@color/normal_text_white"
         android:lineSpacingExtra="4sp"
         app:layout_constraintBottom_toBottomOf="@+id/image_other_field_item"
