@@ -107,10 +107,7 @@
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         android:orientation="vertical"
                         android:nestedScrollingEnabled="false"
-                        tools:listitem="@layout/item_rv_duty_detail"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"/>
+                        tools:listitem="@layout/item_rv_duty_detail"/>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
