@@ -1,14 +1,222 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragment.HomeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.synnapps.carouselview.CarouselView
+                    android:id="@+id/carousel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:autoPlay="true"
+                    app:layout_constraintDimensionRatio="1.875:1"
+                    app:indicatorOrientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:fillColor="@color/white"
+                    app:slideInterval="3"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="12dp"
+                android:layout_marginHorizontal="14dp"
+                android:layout_marginVertical="12dp">
+
+                <ImageView
+                    android:id="@+id/icon_flag"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/icon_flag"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_resume"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:text="이력서 업데이트로 열람 순위 높이기"
+                    android:textColor="@color/fontColor"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/icon_flag"
+                    app:layout_constraintStart_toEndOf="@+id/icon_flag"
+                    app:layout_constraintTop_toTopOf="@+id/icon_flag" />
+
+                <ImageView
+                    android:id="@+id/icon_arrow"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/icon_arrow"
+                    app:layout_constraintBottom_toBottomOf="@+id/icon_flag"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/icon_flag" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="14dp"
+                android:paddingVertical="24dp"
+                android:layout_marginHorizontal="14dp"
+                android:layout_marginBottom="46dp">
+
+                <TextView
+                    android:id="@+id/tv_change"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="이직 후, 단 하나만 바꿀 수 있다면?"
+                    android:textSize="16sp"
+                    android:textColor="@color/fontColor"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/btn_money"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintDimensionRatio="8.444:1"
+                    android:layout_marginTop="28dp"
+                    android:background="@drawable/shape_button"
+                    android:drawableRight="@drawable/icon_check_gray"
+                    android:gravity="start|center"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="18dp"
+                    android:text="월급 앞자리가 바뀌었으면"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_change" />
+
+                <Button
+                    android:id="@+id/btn_career"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintDimensionRatio="8.444:1"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/shape_button"
+                    android:drawableRight="@drawable/icon_check_gray"
+                    android:gravity="start|center"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="18dp"
+                    android:text="내실 튼튼히 커리어가 성장했으면"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="@+id/btn_money"
+                    app:layout_constraintStart_toStartOf="@+id/btn_money"
+                    app:layout_constraintTop_toBottomOf="@+id/btn_money" />
+
+                <Button
+                    android:id="@+id/btn_coworker"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintDimensionRatio="8.444:1"
+                    android:layout_marginTop="8dp"
+
+                    android:background="@drawable/shape_button"
+                    android:backgroundTint="@color/lightGray"
+                    android:drawableRight="@drawable/icon_check_gray"
+                    android:gravity="start|center"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="18dp"
+                    android:text="말이 통하는 상사가 생겼으면"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="@+id/btn_career"
+                    app:layout_constraintStart_toStartOf="@+id/btn_career"
+                    app:layout_constraintTop_toBottomOf="@+id/btn_career" />
+
+                <Button
+                    android:id="@+id/btn_welfare"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintDimensionRatio="8.444:1"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/shape_button"
+                    android:backgroundTint="@color/lightGray"
+                    android:drawableRight="@drawable/icon_check_gray"
+                    android:gravity="start|center"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="18dp"
+                    android:text="기대했던 복지가 생겼으면"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="@+id/btn_coworker"
+                    app:layout_constraintStart_toStartOf="@+id/btn_coworker"
+                    app:layout_constraintTop_toBottomOf="@+id/btn_coworker" />
+
+                <Button
+                    android:id="@+id/btn_distance"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintDimensionRatio="8.444:1"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/shape_button"
+                    android:backgroundTint="@color/lightGray"
+                    android:drawableRight="@drawable/icon_check_gray"
+                    android:gravity="start|center"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="18dp"
+                    android:text="출퇴근 거리가 줄어들었으면"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="@+id/btn_welfare"
+                    app:layout_constraintStart_toStartOf="@+id/btn_welfare"
+                    app:layout_constraintTop_toBottomOf="@+id/btn_welfare" />
+
+                <Button
+                    android:id="@+id/btn_result"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintDimensionRatio="8.444:1"
+                    android:layout_marginTop="24dp"
+                    android:background="@drawable/shape_button"
+                    android:backgroundTint="@color/blue"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="18dp"
+                    android:text="투표 후 결과 보기"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="@+id/btn_distance"
+                    app:layout_constraintStart_toStartOf="@+id/btn_distance"
+                    app:layout_constraintTop_toBottomOf="@+id/btn_distance" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="추천할만한 사람"
+                android:textSize="16sp"
+                android:textColor="@color/fontColor"
+                android:layout_marginLeft="14dp"
+                android:layout_marginBottom="7dp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_recommend"/>
+        </LinearLayout>
+    </ScrollView>
 </FrameLayout>
