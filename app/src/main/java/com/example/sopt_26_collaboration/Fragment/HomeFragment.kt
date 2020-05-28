@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.example.sopt_26_collaboration.R
@@ -28,6 +29,7 @@ class HomeFragment : Fragment() {
         "안드로이드 인재 영입 중",
         "iOS 인재 영입 중"
     )
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,7 +40,15 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        var tvArray : Array<TextView> = arrayOf(
+            view.findViewById(R.id.tv_money),
+            view.findViewById(R.id.tv_career),
+            view.findViewById(R.id.tv_coworker),
+            view.findViewById(R.id.tv_welfare),
+            view.findViewById(R.id.tv_distance)
+        )
 
+        //carouselView 기능 구현
         carouselView = view.findViewById(R.id.carousel) as CarouselView
         carouselView.setImageListener(imageListener)
         carouselView.pageCount = bannerImages.count()
@@ -56,6 +66,29 @@ class HomeFragment : Fragment() {
                 tv_subtitle.text = subtitleStrings.get(position)
             }
         })
+
+        //버튼 하나만 선택할 수 있게 동작
+        val clickListener =
+            View.OnClickListener { v ->
+                val curText = v as TextView
+                for (i in tvArray) {
+                    if(curText == i) curText.isSelected = true
+                    else i.isSelected = false
+                }
+            }
+
+        tv_money.setOnClickListener(clickListener)
+        tv_career.setOnClickListener(clickListener)
+        tv_coworker.setOnClickListener(clickListener)
+        tv_welfare.setOnClickListener(clickListener)
+        tv_distance.setOnClickListener(clickListener)
+        tv_result.setOnClickListener(clickListener)
+
+        //투표 버튼 눌렀을 때
+        tv_result.setOnClickListener {
+            poll_start.visibility = View.GONE
+            poll_result.visibility = View.VISIBLE
+        }
     }
 
     var imageListener =
