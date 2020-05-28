@@ -22,16 +22,50 @@
                 <com.synnapps.carouselview.CarouselView
                     android:id="@+id/carousel"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="192dp"
                     app:autoPlay="true"
-                    app:layout_constraintDimensionRatio="1.875:1"
+                    app:fillColor="@color/white"
+                    app:indicatorGravity="right|bottom"
+                    app:indicatorMarginHorizontal="14dp"
+                    app:indicatorMarginVertical="14dp"
                     app:indicatorOrientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:fillColor="@color/white"
-                    app:slideInterval="3"/>
+                    app:pageColor="@color/white_alpha"
+                    app:slideInterval="3000"
+                    app:snap="true"
+                    app:strokeColor="@color/white_alpha" />
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginTop="142dp"
+                    android:text="SOPT 26기"
+                    android:textColor="@color/white"
+                    android:textSize="19sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/carousel"
+                    app:layout_constraintTop_toTopOf="@+id/carousel" />
+
+                <TextView
+                    android:id="@+id/tv_subtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="14dp"
+                    android:text="디자인 인재 영입 중"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/carousel"
+                    app:layout_constraintStart_toStartOf="@+id/tv_title"
+                    app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+
             </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -97,6 +131,7 @@
                     android:text="이직 후, 단 하나만 바꿀 수 있다면?"
                     android:textSize="16sp"
                     android:textColor="@color/fontColor"
+                    android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -215,6 +250,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="추천할만한 사람"
+                android:textStyle="bold"
                 android:textSize="16sp"
                 android:textColor="@color/fontColor"
                 android:layout_marginLeft="14dp"
