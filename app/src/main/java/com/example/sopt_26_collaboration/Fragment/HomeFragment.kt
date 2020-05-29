@@ -9,6 +9,8 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.example.sopt_26_collaboration.R
+import com.example.sopt_26_collaboration.RecommendAdapter
+import com.example.sopt_26_collaboration.RecommendData
 import com.synnapps.carouselview.CarouselView
 import com.synnapps.carouselview.ImageListener
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -29,6 +31,8 @@ class HomeFragment : Fragment() {
         "안드로이드 인재 영입 중",
         "iOS 인재 영입 중"
     )
+    var recommendData = mutableListOf<RecommendData>()
+    lateinit var recommendAdapter : RecommendAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -86,11 +90,78 @@ class HomeFragment : Fragment() {
 
         //투표 버튼 눌렀을 때
         tv_result.setOnClickListener {
-            poll_start.visibility = View.GONE
-            poll_result.visibility = View.VISIBLE
+            for(i in tvArray) {
+                if(i.isSelected) {
+                    poll_start.visibility = View.GONE
+                    poll_result.visibility = View.VISIBLE
+                    break
+                }
+            }
         }
+
+        //추천인 RecyclerView에 어뎁터 연결
+        recommendAdapter = RecommendAdapter(view.context)
+        rv_recommend.adapter = recommendAdapter
+        loadRecommendData()
     }
 
     var imageListener =
         ImageListener { position, imageView -> imageView.setImageResource(bannerImages.get(position)) }
+
+    private fun loadRecommendData() {
+        recommendData.apply {
+            add(
+                RecommendData(
+                    img_profile = R.drawable.img_profile, name = "이정연", company = "SOPT"
+                )
+            )
+            add(
+                RecommendData(
+                    img_profile = R.drawable.img_profile, name = "이정연", company = "SOPT"
+                )
+            )
+            add(
+                RecommendData(
+                    img_profile = R.drawable.img_profile, name = "이정연", company = "SOPT"
+                )
+            )
+            add(
+                RecommendData(
+                    img_profile = R.drawable.img_profile, name = "이정연", company = "SOPT"
+                )
+            )
+            add(
+                RecommendData(
+                    img_profile = R.drawable.img_profile, name = "이정연", company = "SOPT"
+                )
+            )
+            add(
+                RecommendData(
+                    img_profile = R.drawable.img_profile, name = "이정연", company = "SOPT"
+                )
+            )
+            add(
+                RecommendData(
+                    img_profile = R.drawable.img_profile, name = "이정연", company = "SOPT"
+                )
+            )
+            add(
+                RecommendData(
+                    img_profile = R.drawable.img_profile, name = "이정연", company = "SOPT"
+                )
+            )
+            add(
+                RecommendData(
+                    img_profile = R.drawable.img_profile, name = "이정연", company = "SOPT"
+                )
+            )
+            add(
+                RecommendData(
+                    img_profile = R.drawable.img_profile, name = "이정연", company = "SOPT"
+                )
+            )
+        }
+        recommendAdapter.data = recommendData
+        recommendAdapter.notifyDataSetChanged()
+    }
 }
