@@ -1,16 +1,12 @@
 package com.example.sopt_26_collaboration.fragment
 
-import android.graphics.Rect
 import android.os.Bundle
-import android.util.Log
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.viewpager.widget.ViewPager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.sopt_26_collaboration.CompanyAdapter
 import com.example.sopt_26_collaboration.CompanyData
 import com.synnapps.carouselview.CarouselView
@@ -22,8 +18,6 @@ import com.example.sopt_26_collaboration.recyclerview.RecruitAdapter
 import com.example.sopt_26_collaboration.recyclerview.RecruitData
 import com.example.sopt_semina_assignment.util.HorizontalItemDecorator
 import com.example.sopt_semina_assignment.util.VerticalItemDecorator
-import kotlinx.android.synthetic.main.company_item.*
-import kotlinx.android.synthetic.main.company_item.view.*
 import kotlinx.android.synthetic.main.fragment_home.*
 
 
@@ -32,34 +26,28 @@ import kotlinx.android.synthetic.main.fragment_home.*
  */
 class HomeFragment : Fragment() {
 
-    lateinit var carouselView: CarouselView
     var bannerImages = intArrayOf(
         R.drawable.carousel_design,
         R.drawable.carousel_android,
         R.drawable.carousel
     )
-    var subtitleStrings = arrayOf(
-        "디자인 인재 영입 중",
-        "안드로이드 인재 영입 중",
-        "iOS 인재 영입 중"
-    )
-    var recommendData = mutableListOf<RecommendData>()
-    lateinit var recommendAdapter : RecommendAdapter
-    lateinit var companyAdapter: CompanyAdapter
-    lateinit var recruitAdapter: RecruitAdapter
-    val companyDatas =  mutableListOf<CompanyData>()
-    val recruitDatas = mutableListOf<RecruitData>()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
+    private lateinit var recommendAdapter : RecommendAdapter
+    private lateinit var companyAdapter: CompanyAdapter
+    private lateinit var recruitAdapter: RecruitAdapter
+
+    private val recommendData = mutableListOf<RecommendData>()
+    private val companyDatas =  mutableListOf<CompanyData>()
+    private val recruitDatas = mutableListOf<RecruitData>()
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var tvArray : Array<TextView> = arrayOf(
+
+        val tvArray : Array<TextView> = arrayOf(
             view.findViewById(R.id.tv_money),
             view.findViewById(R.id.tv_career),
             view.findViewById(R.id.tv_coworker),
@@ -67,28 +55,31 @@ class HomeFragment : Fragment() {
             view.findViewById(R.id.tv_distance)
         )
 
+        val subtitleStrings = arrayOf(
+            "디자인 인재 영입 중",
+            "안드로이드 인재 영입 중",
+            "iOS 인재 영입 중"
+        )
+
         //carouselView 기능 구현
-        carouselView = view.findViewById(R.id.carousel) as CarouselView
+        val carouselView = view.findViewById(R.id.carousel) as CarouselView
         carouselView.setImageListener(imageListener)
         carouselView.pageCount = bannerImages.count()
 
         carouselView.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+
             override fun onPageScrollStateChanged(state: Int) { }
 
-            override fun onPageScrolled(
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int
-            ) { }
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) { }
 
             override fun onPageSelected(position: Int) {
-                tv_subtitle.text = subtitleStrings.get(position)
+
+                tv_subtitle.text = subtitleStrings[position]
             }
         })
 
         //버튼 하나만 선택할 수 있게 동작
-        val clickListener =
-            View.OnClickListener { v ->
+        val clickListener = View.OnClickListener { v ->
                 val curText = v as TextView
                 for (i in tvArray) {
                     if(curText == i) curText.isSelected = true
