@@ -16,6 +16,8 @@ import com.example.sopt_26_collaboration.RecommendAdapter
 import com.example.sopt_26_collaboration.RecommendData
 import com.example.sopt_26_collaboration.recyclerview.RecruitAdapter
 import com.example.sopt_26_collaboration.recyclerview.RecruitData
+import com.example.sopt_semina_assignment.util.HorizontalItemDecorator
+import com.example.sopt_semina_assignment.util.VerticalItemDecorator
 import kotlinx.android.synthetic.main.fragment_home.*
 
 
@@ -114,6 +116,8 @@ class HomeFragment : Fragment() {
 
         recruitAdapter = RecruitAdapter(view.context)
         rv_recruit.adapter = recruitAdapter
+        rv_recruit.addItemDecoration(HorizontalItemDecorator(12))
+        rv_recruit.addItemDecoration(VerticalItemDecorator(16))
         loadRecruitDatas()
     }
 
