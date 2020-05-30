@@ -1,14 +1,403 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragment.HomeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical">
+      
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
+                <com.synnapps.carouselview.CarouselView
+                    android:id="@+id/carousel"
+                    android:layout_width="match_parent"
+                    android:layout_height="192dp"
+                    app:autoPlay="true"
+                    app:fillColor="@color/white"
+                    app:indicatorGravity="right|bottom"
+                    app:indicatorMarginHorizontal="14dp"
+                    app:indicatorMarginVertical="14dp"
+                    app:indicatorOrientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:pageColor="@color/white_alpha"
+                    app:slideInterval="3000"
+                    app:snap="true"
+                    app:strokeColor="@color/white_alpha" />
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginTop="142dp"
+                    android:text="SOPT 26기"
+                    android:textColor="@color/white"
+                    android:textSize="19sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/carousel"
+                    app:layout_constraintTop_toTopOf="@+id/carousel" />
+
+                <TextView
+                    android:id="@+id/tv_subtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="14dp"
+                    android:text="디자인 인재 영입 중"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/carousel"
+                    app:layout_constraintStart_toStartOf="@+id/tv_title"
+                    app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="12dp"
+                android:layout_marginHorizontal="14dp"
+                android:layout_marginVertical="12dp"
+                android:background="@drawable/container_background"
+                android:elevation="20dp"
+                android:outlineProvider="paddedBounds"
+                android:clipToPadding="false">
+
+                <ImageView
+                    android:id="@+id/icon_flag"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/icon_flag"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_resume"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:text="이력서 업데이트로 열람 순위 높이기"
+                    android:textColor="@color/fontColor"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/icon_flag"
+                    app:layout_constraintStart_toEndOf="@+id/icon_flag"
+                    app:layout_constraintTop_toTopOf="@+id/icon_flag" />
+
+                <ImageView
+                    android:id="@+id/icon_arrow"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/icon_arrow"
+                    app:layout_constraintBottom_toBottomOf="@+id/icon_flag"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/icon_flag" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/poll_result"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="17dp"
+                android:layout_marginHorizontal="14dp"
+                android:layout_marginBottom="46dp"
+                android:elevation="20dp"
+                android:outlineProvider="paddedBounds"
+                android:clipToPadding="false"
+                android:background="@drawable/container_background">
+                <ImageView
+                    android:id="@+id/iv_poll"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/poll_24px"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginLeft="12dp"
+                    android:text="이직 후, 단 하나만 바꿀 수 있다면?"
+                    android:textSize="14sp"
+                    android:textColor="@color/fontColor"
+                    app:layout_constraintStart_toEndOf="@+id/iv_poll"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="투표 결과 보러가기"
+                    android:textSize="14sp"
+                    android:textColor="#adadad"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/textView"
+                    app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+                <ImageView
+                    android:id="@+id/iv_arrow"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/icon_arrow"
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_poll"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/iv_poll" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/poll_start"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="14dp"
+                android:paddingVertical="24dp"
+                android:layout_marginHorizontal="14dp"
+                android:layout_marginBottom="46dp"
+                android:background="@drawable/container_background"
+                android:elevation="20dp"
+                android:outlineProvider="paddedBounds"
+                android:clipToPadding="false">
+
+                <TextView
+                    android:id="@+id/tv_change"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="이직 후, 단 하나만 바꿀 수 있다면?"
+                    android:textSize="16sp"
+                    android:textColor="@color/fontColor"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_money"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintDimensionRatio="8.444:1"
+                    android:layout_marginTop="28dp"
+                    android:background="@drawable/shape_button"
+                    android:drawableRight="@drawable/select_button"
+                    android:gravity="start|center"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="18dp"
+                    android:text="월급 앞자리가 바뀌었으면"
+                    android:textSize="12sp"
+                    android:textColor="@color/fontColor"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_change"/>
+
+                <TextView
+                    android:id="@+id/tv_career"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintDimensionRatio="8.444:1"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/shape_button"
+                    android:drawableRight="@drawable/select_button"
+                    android:gravity="start|center"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="18dp"
+                    android:text="내실 튼튼히 커리어가 성장했으면"
+                    android:textSize="12sp"
+                    android:textColor="@color/fontColor"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_money"
+                    app:layout_constraintStart_toStartOf="@+id/tv_money"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_money" />
+
+                <TextView
+                    android:id="@+id/tv_coworker"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintDimensionRatio="8.444:1"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/shape_button"
+                    android:drawableRight="@drawable/select_button"
+                    android:gravity="start|center"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="18dp"
+                    android:text="말이 통하는 상사가 생겼으면"
+                    android:textSize="12sp"
+                    android:textColor="@color/fontColor"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_career"
+                    app:layout_constraintStart_toStartOf="@+id/tv_career"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_career" />
+
+                <TextView
+                    android:id="@+id/tv_welfare"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintDimensionRatio="8.444:1"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/shape_button"
+                    android:drawableRight="@drawable/select_button"
+                    android:gravity="start|center"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="18dp"
+                    android:text="기대했던 복지가 생겼으면"
+                    android:textSize="12sp"
+                    android:textColor="@color/fontColor"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_coworker"
+                    app:layout_constraintStart_toStartOf="@+id/tv_coworker"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_coworker" />
+
+                <TextView
+                    android:id="@+id/tv_distance"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintDimensionRatio="8.444:1"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/shape_button"
+                    android:drawableRight="@drawable/select_button"
+                    android:gravity="start|center"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="18dp"
+                    android:text="출퇴근 거리가 줄어들었으면"
+                    android:textSize="12sp"
+                    android:textColor="@color/fontColor"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_welfare"
+                    app:layout_constraintStart_toStartOf="@+id/tv_welfare"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_welfare" />
+
+                <TextView
+                    android:id="@+id/tv_result"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintDimensionRatio="8.444:1"
+                    android:layout_marginTop="24dp"
+                    android:background="@drawable/shape_button"
+                    android:backgroundTint="@color/blue"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="18dp"
+                    android:text="투표 후 결과 보기"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_distance"
+                    app:layout_constraintStart_toStartOf="@+id/tv_distance"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_distance" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="추천할만한 사람"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="@color/fontColor"
+                android:layout_marginLeft="14dp"
+                android:layout_marginBottom="7dp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_recommend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_recommend"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/image_1">
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_marginLeft="14dp"
+                android:layout_marginTop="27dp"
+                android:text="인기 있는 회사"
+                android:textColor="#ffffff"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="14dp"
+                android:layout_marginRight="14dp"
+                android:text="더보기"
+                android:textColor="#ffffff"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_company"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="21dp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView4"
+                tools:listitem="@layout/company_item" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_marginLeft="14dp"
+                android:layout_marginTop="40dp"
+                android:text="정연님이 관심있을만한 채용정보예요."
+                android:textColor="#333333"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_recruit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="14dp"
+                android:layout_marginRight="2dp"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView3"
+                app:spanCount="2"
+                tools:listitem="@layout/recruit_item" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 </FrameLayout>
