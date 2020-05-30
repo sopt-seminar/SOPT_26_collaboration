@@ -57,6 +57,66 @@ class HomeFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        var tvArray : Array<TextView> = arrayOf(
+            view.findViewById(R.id.tv_money),
+            view.findViewById(R.id.tv_career),
+            view.findViewById(R.id.tv_coworker),
+            view.findViewById(R.id.tv_welfare),
+            view.findViewById(R.id.tv_distance)
+        )
+
+        //carouselView 기능 구현
+        carouselView = view.findViewById(R.id.carousel) as CarouselView
+        carouselView.setImageListener(imageListener)
+        carouselView.pageCount = bannerImages.count()
+
+        carouselView.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrollStateChanged(state: Int) { }
+
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) { }
+
+            override fun onPageSelected(position: Int) {
+                tv_subtitle.text = subtitleStrings.get(position)
+            }
+        })
+
+        //버튼 하나만 선택할 수 있게 동작
+        val clickListener =
+            View.OnClickListener { v ->
+                val curText = v as TextView
+                for (i in tvArray) {
+                    if(curText == i) curText.isSelected = true
+                    else i.isSelected = false
+                }
+            }
+
+        tv_money.setOnClickListener(clickListener)
+        tv_career.setOnClickListener(clickListener)
+        tv_coworker.setOnClickListener(clickListener)
+        tv_welfare.setOnClickListener(clickListener)
+        tv_distance.setOnClickListener(clickListener)
+        tv_result.setOnClickListener(clickListener)
+
+        //투표 버튼 눌렀을 때
+        tv_result.setOnClickListener {
+            for(i in tvArray) {
+                if(i.isSelected) {
+                    poll_start.visibility = View.GONE
+                    poll_result.visibility = View.VISIBLE
+                    break
+                }
+            }
+        }
+
+        //추천인 RecyclerView에 어뎁터 연결
+        recommendAdapter = RecommendAdapter(view.context)
+        rv_recommend.adapter = recommendAdapter
+        loadRecommendData()
+
         companyAdapter = CompanyAdapter(view.context)
         rv_company.adapter = companyAdapter //리사이클러뷰 어댑터를 insta Adapter로 지정
         loadCompanyDatas()
@@ -191,69 +251,6 @@ class HomeFragment : Fragment() {
         }
         recruitAdapter.datas = recruitDatas
         recruitAdapter.notifyDataSetChanged()
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        var tvArray : Array<TextView> = arrayOf(
-            view.findViewById(R.id.tv_money),
-            view.findViewById(R.id.tv_career),
-            view.findViewById(R.id.tv_coworker),
-            view.findViewById(R.id.tv_welfare),
-            view.findViewById(R.id.tv_distance)
-        )
-
-        //carouselView 기능 구현
-        carouselView = view.findViewById(R.id.carousel) as CarouselView
-        carouselView.setImageListener(imageListener)
-        carouselView.pageCount = bannerImages.count()
-
-        carouselView.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrollStateChanged(state: Int) { }
-
-            override fun onPageScrolled(
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int
-            ) { }
-
-            override fun onPageSelected(position: Int) {
-                tv_subtitle.text = subtitleStrings.get(position)
-            }
-        })
-
-        //버튼 하나만 선택할 수 있게 동작
-        val clickListener =
-            View.OnClickListener { v ->
-                val curText = v as TextView
-                for (i in tvArray) {
-                    if(curText == i) curText.isSelected = true
-                    else i.isSelected = false
-                }
-            }
-
-        tv_money.setOnClickListener(clickListener)
-        tv_career.setOnClickListener(clickListener)
-        tv_coworker.setOnClickListener(clickListener)
-        tv_welfare.setOnClickListener(clickListener)
-        tv_distance.setOnClickListener(clickListener)
-        tv_result.setOnClickListener(clickListener)
-
-        //투표 버튼 눌렀을 때
-        tv_result.setOnClickListener {
-            for(i in tvArray) {
-                if(i.isSelected) {
-                    poll_start.visibility = View.GONE
-                    poll_result.visibility = View.VISIBLE
-                    break
-                }
-            }
-        }
-
-        //추천인 RecyclerView에 어뎁터 연결
-        recommendAdapter = RecommendAdapter(view.context)
-        rv_recommend.adapter = recommendAdapter
-        loadRecommendData()
     }
 
     var imageListener =
