@@ -1,4 +1,4 @@
-package com.example.sopt_26_collaboration.Fragment
+package com.example.sopt_26_collaboration.fragment
 
 import android.graphics.Rect
 import android.os.Bundle

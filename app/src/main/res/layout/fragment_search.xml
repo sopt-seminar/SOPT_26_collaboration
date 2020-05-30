@@ -3,12 +3,113 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragment.SearchFragment">
+    android:gravity="center"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragment.SearchFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:gravity ="center"
+        android:fillViewport="true"
+        android:layout_marginTop="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp">
+
+                <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_search_title"
+                android:text="개발"
+                style="@style/SearchTitleText"
+                android:layout_alignParentLeft="true"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/img_dropdown_btn"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/an_search_dropdown_btn"
+                    android:layout_toRightOf="@id/tv_search_title"/>
+
+                <TextView
+                    style="@style/SearchTitleContentText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="0dp"
+                    android:layout_toRightOf="@id/img_dropdown_btn"
+                    android:text="분야에서" />
+
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="어떤 직군에 관심있으신가요?"
+                style="@style/SearchTitleContentText"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:background="@drawable/edit_search_searchbar"
+                android:hint="회사, 포지션, 기술,태그를 검색해보세요"
+                android:drawableLeft="@drawable/an_search_search_ic"
+                android:drawableStart="@drawable/an_search_search_ic"
+                android:drawablePadding="8dp"
+                android:paddingLeft="40dp"
+                android:layout_marginTop="16dp"
+                android:textSize="14sp"
+                android:textColorHint="#333333"
+                android:id="@+id/et_search"/>
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="16dp"
+                android:text="가장 많이 찾아보는 직군"
+                style="@style/SearchSubTitleText"/>
+
+          <androidx.recyclerview.widget.RecyclerView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:id="@+id/rv_search_duty"
+              app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+              android:orientation="horizontal"
+              tools:listitem="@layout/item_rv_duty"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="직군에 대해 더 알고싶어?"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="16dp"
+                style="@style/SearchSubTitleText"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/rv_search_duty_detail"
+                         android:clipToPadding="false"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        android:orientation="vertical"
+                        android:nestedScrollingEnabled="false"
+                        tools:listitem="@layout/item_rv_duty_detail"/>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
 
 </FrameLayout>
