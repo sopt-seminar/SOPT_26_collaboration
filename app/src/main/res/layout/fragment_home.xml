@@ -324,6 +324,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="34dp"
             android:background="@drawable/image_1">
 
             <TextView
@@ -369,14 +370,14 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:paddingRight="14dp"
+            android:paddingLeft="14dp">
 
             <TextView
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="14dp"
-                android:layout_marginLeft="14dp"
                 android:layout_marginTop="40dp"
                 android:text="정연님이 관심있을만한 채용정보예요."
                 android:textColor="#333333"
@@ -386,11 +387,9 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_recruit"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:layout_marginLeft="14dp"
-                android:layout_marginRight="2dp"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
