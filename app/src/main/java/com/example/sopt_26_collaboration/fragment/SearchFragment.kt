@@ -1,6 +1,7 @@
 package com.example.sopt_26_collaboration.fragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,11 +12,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.sopt_26_collaboration.R
 import com.example.sopt_26_collaboration.data.DutyData
 import com.example.sopt_26_collaboration.data.DutyDetailData
+import com.example.sopt_26_collaboration.data.ResponseContentData
+import com.example.sopt_26_collaboration.network.RequestToServer
 import com.example.sopt_26_collaboration.recycler.DutyDetailRecyclerAdapter
 import com.example.sopt_26_collaboration.recycler.DutyRecyclerAdapter
 import com.example.sopt_semina_assignment.util.HorizontalItemDecorator
 import com.example.sopt_semina_assignment.util.VerticalItemDecorator
 import kotlinx.android.synthetic.main.fragment_search.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 /**
  * A simple [Fragment] subclass.
@@ -23,9 +29,10 @@ import kotlinx.android.synthetic.main.fragment_search.*
 class SearchFragment : Fragment() {
 
     lateinit var dutyAdapter: DutyRecyclerAdapter
+    val requestToServer = RequestToServer
     lateinit var dutyDetailAdapter : DutyDetailRecyclerAdapter
     val duty_datas = mutableListOf<DutyData>()
-    val duty_detail_datas = mutableListOf<DutyDetailData>()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,9 +47,34 @@ class SearchFragment : Fragment() {
         dutyAdapter  = DutyRecyclerAdapter(view!!.context)
         rv_search_duty.adapter = dutyAdapter
         rv_search_duty.addItemDecoration(HorizontalItemDecorator(16))
-        dutyDetailAdapter = DutyDetailRecyclerAdapter(view!!.context)
-        rv_search_duty_detail.adapter = dutyDetailAdapter
-        rv_search_duty_detail.addItemDecoration(VerticalItemDecorator(16))
+
+        requestToServer.service.requestContentInfo()
+            .enqueue(
+                object : Callback<ResponseContentData> {
+                    override fun onFailure(call: Call<ResponseContentData>, t: Throwable) {
+                        Log.d("통신실패", "${t}")
+                    }
+
+                    override fun onResponse(
+                        call: Call<ResponseContentData>,
+                        response: Response<ResponseContentData>
+                    ) {
+                        if (response.isSuccessful) {
+                            if(response.body()!!.success)
+                            {
+                                dutyDetailAdapter = DutyDetailRecyclerAdapter(view!!.context, response.body()!!.data)
+                                rv_search_duty_detail.adapter = dutyDetailAdapter
+                                rv_search_duty_detail.addItemDecoration(VerticalItemDecorator(16))
+                                dutyDetailAdapter.notifyDataSetChanged()
+                            }
+
+                        }
+
+                    }
+                }
+            )
+
+
 
         loadDatas()
 
@@ -60,15 +92,9 @@ class SearchFragment : Fragment() {
 
         dutyAdapter.datas = duty_datas
         dutyAdapter.notifyDataSetChanged()
-        duty_detail_datas.apply {
-            add(DutyDetailData(img=R.drawable.an_search_content_1_img,duty = "프론트엔드",duty_content = "이직할 때 고려할점"))
-            add(DutyDetailData(img=R.drawable.an_search_content_2_img,duty = "ios 개발",duty_content = "가장 중요하게 생각하는 건?"))
-            add(DutyDetailData(img=R.drawable.an_search_content_3_img,duty = "자바언어 공부",duty_content = "어떻게 하는게 좋을까?"))
-            add(DutyDetailData(img=R.drawable.an_search_content_1_img,duty = "안드로이드 개발",duty_content = "코틀린으로? 자바로?"))
 
-        }
-        dutyDetailAdapter.datas = duty_detail_datas
-        dutyDetailAdapter.notifyDataSetChanged()
+
+
 
 
     }
