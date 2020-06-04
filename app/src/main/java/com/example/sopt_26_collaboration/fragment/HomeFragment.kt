@@ -1,6 +1,8 @@
 package com.example.sopt_26_collaboration.fragment
 
+import android.app.DownloadManager
 import android.os.Bundle
+import android.util.Log
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,17 +10,24 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager.widget.ViewPager
 import com.example.sopt_26_collaboration.CompanyAdapter
-import com.example.sopt_26_collaboration.CompanyData
+import com.example.sopt_26_collaboration.recyclerview.CompanyData
 import com.synnapps.carouselview.CarouselView
 import com.synnapps.carouselview.ImageListener
 import com.example.sopt_26_collaboration.R
 import com.example.sopt_26_collaboration.RecommendAdapter
-import com.example.sopt_26_collaboration.RecommendData
+import com.example.sopt_26_collaboration.RecommendPeople
+import com.example.sopt_26_collaboration.network.RequestInterface
+import com.example.sopt_26_collaboration.network.RetrofitClient
+import com.example.sopt_26_collaboration.network.response.CompanyResponse
 import com.example.sopt_26_collaboration.recyclerview.RecruitAdapter
 import com.example.sopt_26_collaboration.recyclerview.RecruitData
 import com.example.sopt_semina_assignment.util.HorizontalItemDecorator
 import com.example.sopt_semina_assignment.util.VerticalItemDecorator
 import kotlinx.android.synthetic.main.fragment_home.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.util.*
 
 
 /**
@@ -36,9 +45,11 @@ class HomeFragment : Fragment() {
     private lateinit var companyAdapter: CompanyAdapter
     private lateinit var recruitAdapter: RecruitAdapter
 
-    private val recommendData = mutableListOf<RecommendData>()
-    private val companyDatas =  mutableListOf<CompanyData>()
+    private val recommendPeople = mutableListOf<RecommendPeople>()
+    private var companyDatas =  mutableListOf<CompanyData>()
     private val recruitDatas = mutableListOf<RecruitData>()
+
+    private val service = RetrofitClient.create(RequestInterface::class.java)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_home, container, false)
@@ -108,7 +119,7 @@ class HomeFragment : Fragment() {
         //추천인 RecyclerView에 어뎁터 연결
         recommendAdapter = RecommendAdapter(view.context)
         rv_recommend.adapter = recommendAdapter
-        loadRecommendData()
+        loadRecommendPeople()
 
         companyAdapter = CompanyAdapter(view.context)
         rv_company.adapter = companyAdapter //리사이클러뷰 어댑터를 insta Adapter로 지정
@@ -122,57 +133,20 @@ class HomeFragment : Fragment() {
     }
 
     private fun loadCompanyDatas(){
-        companyDatas.apply{
-            add(
-                CompanyData(
-                    companyImg = "https://cdn.pixabay.com/photo/2020/04/19/08/17/watercolor-5062356__480.jpg",
-                    companyName = "카카오",
-                    companyInfo = "IT, 컨텐츠"
-                )
-            )
-            add(
-                CompanyData(
-                    companyImg = "https://cdn.pixabay.com/photo/2020/04/19/08/17/watercolor-5062356__480.jpg",
-                    companyName = "카카오",
-                    companyInfo = "IT, 컨텐츠"
-                )
-            )
-            add(
-                CompanyData(
-                    companyImg = "https://cdn.pixabay.com/photo/2020/04/19/08/17/watercolor-5062356__480.jpg",
-                    companyName = "카카오",
-                    companyInfo = "IT, 컨텐츠"
-                )
-            )
-            add(
-                CompanyData(
-                    companyImg = "https://cdn.pixabay.com/photo/2020/04/19/08/17/watercolor-5062356__480.jpg",
-                    companyName = "카카오",
-                    companyInfo = "IT, 컨텐츠"
-                )
-            )
-            add(
-                CompanyData(
-                    companyImg = "https://cdn.pixabay.com/photo/2020/04/19/08/17/watercolor-5062356__480.jpg",
-                    companyName = "카카오",
-                    companyInfo = "IT, 컨텐츠"
-                )
-            )
-            add(
-                CompanyData(
-                    companyImg = "https://cdn.pixabay.com/photo/2020/04/19/08/17/watercolor-5062356__480.jpg",
-                    companyName = "카카오",
-                    companyInfo = "IT, 컨텐츠"
-                )
-            )
-            add(
-                CompanyData(
-                    companyImg = "https://cdn.pixabay.com/photo/2020/04/19/08/17/watercolor-5062356__480.jpg",
-                    companyName = "카카오",
-                    companyInfo = "IT, 컨텐츠"
-                )
-            )
-        }
+        service.getPopularCompany().enqueue(object: Callback<CompanyResponse> {
+            override fun onFailure(call: Call<CompanyResponse>, t: Throwable) {
+                Log.d("loadComanyDatas()", "Fail to load company. $t")
+            }
+
+            override fun onResponse(call: Call<CompanyResponse>, response: Response<CompanyResponse>) {
+                if (response.isSuccessful) {
+                    if (response.body()!!.success) {
+                        companyDatas = response.body()!!.data as MutableList<CompanyData>
+                    }
+                }
+            }
+
+        })
         companyAdapter.datas = companyDatas
         companyAdapter.notifyDataSetChanged()
     }
@@ -251,60 +225,60 @@ class HomeFragment : Fragment() {
     var imageListener =
         ImageListener { position, imageView -> imageView.setImageResource(bannerImages.get(position)) }
 
-    private fun loadRecommendData() {
-        recommendData.apply {
+    private fun loadRecommendPeople() {
+        recommendPeople.apply {
             add(
-                RecommendData(
+                RecommendPeople(
                     img_profile = R.drawable.img_profile, name = "이정연", company = "SOPT"
                 )
             )
             add(
-                RecommendData(
+                RecommendPeople(
                     img_profile = R.drawable.img_profile, name = "이정연", company = "SOPT"
                 )
             )
             add(
-                RecommendData(
+                RecommendPeople(
                     img_profile = R.drawable.img_profile, name = "이정연", company = "SOPT"
                 )
             )
             add(
-                RecommendData(
+                RecommendPeople(
                     img_profile = R.drawable.img_profile, name = "이정연", company = "SOPT"
                 )
             )
             add(
-                RecommendData(
+                RecommendPeople(
                     img_profile = R.drawable.img_profile, name = "이정연", company = "SOPT"
                 )
             )
             add(
-                RecommendData(
+                RecommendPeople(
                     img_profile = R.drawable.img_profile, name = "이정연", company = "SOPT"
                 )
             )
             add(
-                RecommendData(
+                RecommendPeople(
                     img_profile = R.drawable.img_profile, name = "이정연", company = "SOPT"
                 )
             )
             add(
-                RecommendData(
+                RecommendPeople(
                     img_profile = R.drawable.img_profile, name = "이정연", company = "SOPT"
                 )
             )
             add(
-                RecommendData(
+                RecommendPeople(
                     img_profile = R.drawable.img_profile, name = "이정연", company = "SOPT"
                 )
             )
             add(
-                RecommendData(
+                RecommendPeople(
                     img_profile = R.drawable.img_profile, name = "이정연", company = "SOPT"
                 )
             )
         }
-        recommendAdapter.data = recommendData
+        recommendAdapter.data = recommendPeople
         recommendAdapter.notifyDataSetChanged()
     }
 }

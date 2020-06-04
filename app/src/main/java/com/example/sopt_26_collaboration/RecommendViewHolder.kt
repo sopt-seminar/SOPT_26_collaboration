@@ -11,9 +11,9 @@ class RecommendViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val tv_name = itemView.findViewById<TextView>(R.id.tv_name)
     val tv_company = itemView.findViewById<TextView>(R.id.tv_company)
 
-    fun bind(recommendData: RecommendData) {
-        Glide.with(itemView).load(recommendData.img_profile).into(img_profile)
-        tv_name.text = recommendData.name
-        tv_company.text = recommendData.company
+    fun bind(recommendPeople: RecommendPeople) {
+        Glide.with(itemView).load(recommendPeople.img_profile).into(img_profile)
+        tv_name.text = recommendPeople.name
+        tv_company.text = recommendPeople.company
     }
 }
