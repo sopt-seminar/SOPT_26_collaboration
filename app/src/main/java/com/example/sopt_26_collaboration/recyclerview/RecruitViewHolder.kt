@@ -33,48 +33,59 @@ class RecruitViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         txt_heart_count.text = recruitData.company_hearts.toString()
         Glide.with(itemView).load(recruitData.company_img).into(img_recruit)
         heart(recruitData)
+
     }
 
     fun heart(recruitData: RecruitData){
         val requestToServer = RequestToServer
         val btn_heart = itemView.findViewById<ConstraintLayout>(R.id.btn_heart)
         var clicked : Boolean = false
+        var heartCount :Int
 
         btn_heart.setOnClickListener {
-           if(!clicked){
-               img_heart.setImageResource(R.drawable.heartred_14px)
-               clicked = true
+            //get으로 먼저 하트 갯수 받아오기
+            requestToServer.service.requestRecruitInfo().customEnqueue(
+                onError = { Log.d("requestRecruitInfo","올바르지 못한 요청")},
+                onSuccess = {
+                    if (it.success) { //body()가 null이 아니고, success가 true -> 성공
+                        recruitData.company_hearts =
+                            it.data.get(recruitData.company_idx-1).company_hearts
+                    }
+                }
+            )
 
-               requestToServer.service.requestHeartUpdate(
-                   company_idx = recruitData.company_idx,
-                   company_hearts = recruitData.company_hearts+1
-               ).customEnqueue(
-                   onError = { Log.d("recruit_heart_update","올바르지 못한 요청")},
-                   onSuccess = {
-                       if(it.success){ //body()가 null이 아니고, success가 true -> 성공
-                           txt_heart_count.text = (recruitData.company_hearts+1).toString()
-                       }
-                   }
-               )
-
-           }
+            //클릭 유무에 따라 하트버튼 채워짐, 하트갯수 조정
+            if(!clicked) {
+                img_heart.setImageResource(R.drawable.heartred_14px)
+                heartCount = recruitData.company_hearts+1
+                clicked = true
+            }
             else{
-               img_heart.setImageResource(R.drawable.heartgrey_14px)
-               clicked = false
+                img_heart.setImageResource(R.drawable.heartgrey_14px)
+                heartCount = recruitData.company_hearts-1
+                clicked = false
+            }
 
-               requestToServer.service.requestHeartUpdate(
+            requestToServer.service.requestHeartUpdate(
                    company_idx = recruitData.company_idx,
-                   company_hearts = recruitData.company_hearts -1
+                   company_hearts = heartCount
                ).customEnqueue(
-                   onError = { Log.d("recruit_heart_update","올바르지 못한 요청")},
+                   onError = { Log.d("requestHeartUpdate","올바르지 못한 요청")},
                    onSuccess = {
                        if(it.success){ //body()가 null이 아니고, success가 true -> 성공
-                           txt_heart_count.text = (recruitData.company_hearts-1).toString()
+                           requestToServer.service.requestRecruitInfo().customEnqueue(
+                               onError = { Log.d("requestRecruitInfo","올바르지 못한 요청")},
+                               onSuccess = {
+                                   if (it.success) { //body()가 null이 아니고, success가 true -> 성공
+                                       recruitData.company_hearts =
+                                           it.data.get(recruitData.company_idx-1).company_hearts
+                                       txt_heart_count.text = recruitData.company_hearts.toString()
+                                   }
+                               }
+                           )
                        }
                    }
-               )
-           }
-            
+                )
         }
     }
 }

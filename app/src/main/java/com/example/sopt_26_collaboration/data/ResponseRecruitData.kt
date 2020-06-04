@@ -11,6 +11,6 @@ data class RecruitData(
     val company_name : String,
     val company_location : String,
     val recruit_position : String,
-    val company_hearts : Int,
+    var company_hearts : Int,
     val company_idx : Int
 )

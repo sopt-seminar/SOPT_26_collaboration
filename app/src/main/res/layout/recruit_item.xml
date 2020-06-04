@@ -16,8 +16,8 @@
 
         <ImageView
             android:id="@+id/img_recruit"
-            android:layout_width="180dp"
-            android:layout_height="wrap_content"
+            android:layout_width="160dp"
+            android:layout_height="120dp"
             android:scaleType="centerCrop"
             app:srcCompat="@drawable/img_recruit_1" />
 
@@ -70,6 +70,8 @@
         android:layout_marginLeft="2dp"
         android:layout_marginTop="6dp"
         android:text="Front_End 개발자"
+        android:textSize="14sp"
+        android:textStyle="bold"
         android:textColor="#333333"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
