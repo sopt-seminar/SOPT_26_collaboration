@@ -17,7 +17,7 @@ import com.example.sopt_26_collaboration.R
 import com.example.sopt_26_collaboration.RecommendAdapter
 import com.example.sopt_26_collaboration.RecommendPeople
 import com.example.sopt_26_collaboration.network.RequestInterface
-import com.example.sopt_26_collaboration.network.RetrofitClient
+import com.example.sopt_26_collaboration.network.RequestToServer
 import com.example.sopt_26_collaboration.network.response.CompanyResponse
 import com.example.sopt_26_collaboration.recyclerview.RecruitAdapter
 import com.example.sopt_26_collaboration.recyclerview.RecruitData
@@ -49,7 +49,7 @@ class HomeFragment : Fragment() {
     private var companyDatas =  mutableListOf<CompanyData>()
     private val recruitDatas = mutableListOf<RecruitData>()
 
-    private val service = RetrofitClient.create(RequestInterface::class.java)
+    private val service = RequestToServer.service
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_home, container, false)
@@ -144,11 +144,11 @@ class HomeFragment : Fragment() {
                         companyDatas = response.body()!!.data as MutableList<CompanyData>
                     }
                 }
+                companyAdapter.datas = companyDatas
+                companyAdapter.notifyDataSetChanged()
             }
 
         })
-        companyAdapter.datas = companyDatas
-        companyAdapter.notifyDataSetChanged()
     }
 
     private fun loadRecruitDatas(){

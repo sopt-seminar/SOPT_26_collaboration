@@ -4,11 +4,9 @@ import android.graphics.Color
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.sopt_26_collaboration.recyclerview.CompanyData
-import java.net.URI
 
 class CompanyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
     val img_company = itemView.findViewById<ImageView>(R.id.img_company)
@@ -19,13 +17,14 @@ class CompanyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
     fun bind(companyData: CompanyData){
         txt_company_name.text = companyData.companyName
         txt_company_info.text = companyData.companyInfo
-        Glide.with(img_company.context).load(companyData.companyImg).into(img_company)
-        switchFollowState(txt_comany_follow, companyData.isFollowed)
+        Glide.with(img_company).load(companyData.companyImg).into(img_company)
+
+        companyData.isFollowed?.let { switchFollowState(txt_comany_follow, it) }
 
         txt_comany_follow.setOnClickListener {
-            switchFollowState(txt_comany_follow, !companyData.isFollowed)
+            switchFollowState(txt_comany_follow, !companyData.isFollowed!!)
 
-            companyData.isFollowed = !companyData.isFollowed
+            companyData.isFollowed = !companyData.isFollowed!!
 
             //Todo: 변경된 데이터 서버에 업데이트
         }
