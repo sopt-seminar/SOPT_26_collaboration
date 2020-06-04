@@ -6,8 +6,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.sopt_26_collaboration.CompanyData
 import com.example.sopt_26_collaboration.R
+import com.example.sopt_26_collaboration.data.RecruitData
+import com.example.sopt_26_collaboration.data.ResponseRecruitData
 import java.lang.Integer.parseInt
 
 class RecruitViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -17,10 +20,10 @@ class RecruitViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val txt_recruit_location = itemView.findViewById<TextView>(R.id.txt_recruit_location)
 
     fun bind(recruitData: RecruitData) {
-        txt_recruit_field.text = recruitData.recruitField
-        txt_recruit_company.text = recruitData.recruitCompany
-        txt_recruit_location.text = recruitData.recruitLocation
-        img_recruit.setImageResource(R.drawable.img_recruit_1)
+        txt_recruit_field.text = recruitData.recruit_position
+        txt_recruit_company.text = recruitData.company_name
+        txt_recruit_location.text = recruitData.company_location
+        Glide.with(itemView).load(recruitData.company_img).into(img_recruit)
         heart()
     }
 
