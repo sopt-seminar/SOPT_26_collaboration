@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.sopt_26_collaboration.recyclerview.CompanyData
 
 class CompanyAdapter(private val context: Context) : RecyclerView.Adapter<CompanyViewHolder>() {
     var datas = mutableListOf<CompanyData>()

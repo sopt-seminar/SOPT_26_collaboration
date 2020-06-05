@@ -7,16 +7,10 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.sopt_26_collaboration.CompanyData
 import com.example.sopt_26_collaboration.R
 import com.example.sopt_26_collaboration.data.RecruitData
-import com.example.sopt_26_collaboration.data.ResponseRecruitData
 import com.example.sopt_26_collaboration.network.RequestToServer
 import com.example.sopt_26_collaboration.network.customEnqueue
-import com.example.sopt_semina_assignment.util.HorizontalItemDecorator
-import com.example.sopt_semina_assignment.util.VerticalItemDecorator
-import kotlinx.android.synthetic.main.fragment_home.*
-import java.lang.Integer.parseInt
 
 class RecruitViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val img_recruit = itemView.findViewById<ImageView>(R.id.img_recruit)

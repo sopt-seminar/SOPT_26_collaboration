@@ -4,8 +4,6 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.sopt_26_collaboration.CompanyData
-import com.example.sopt_26_collaboration.CompanyViewHolder
 import com.example.sopt_26_collaboration.R
 import com.example.sopt_26_collaboration.data.RecruitData
 
