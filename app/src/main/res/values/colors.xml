@@ -8,4 +8,7 @@
     <color name="fontColor">#333333</color>
     <color name="blue">#538df8</color>
     <color name="white_alpha">#66FFFFFF</color>
+    
+    <color name="text_following">#333333</color>
+    <color name="text_not_follow">#ffffff</color>
 </resources>
