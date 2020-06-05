@@ -16,6 +16,7 @@ import com.example.sopt_26_collaboration.R
 import com.example.sopt_26_collaboration.RecommendAdapter
 import com.example.sopt_26_collaboration.RecommendPeople
 import com.example.sopt_26_collaboration.network.RequestToServer
+import com.example.sopt_26_collaboration.network.response.ResponseRecommendPeople
 import com.example.sopt_26_collaboration.network.response.ResponsePopularCompany
 import com.example.sopt_26_collaboration.recyclerview.RecruitAdapter
 import com.example.sopt_26_collaboration.recyclerview.RecruitData
@@ -38,15 +39,16 @@ class HomeFragment : Fragment() {
         R.drawable.carousel
     )
 
-    private lateinit var recommendAdapter : RecommendAdapter
+    private lateinit var recommendAdapter: RecommendAdapter
     private lateinit var companyAdapter: CompanyAdapter
     private lateinit var recruitAdapter: RecruitAdapter
 
-    private val recommendPeople = mutableListOf<RecommendPeople>()
+    private var recommendPeople = mutableListOf<RecommendPeople>()
     private var companyDatas =  mutableListOf<CompanyData>()
     private val recruitDatas = mutableListOf<RecruitData>()
 
     private val service = RequestToServer.service
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_home, container, false)
@@ -55,7 +57,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val tvArray : Array<TextView> = arrayOf(
+        val tvArray: Array<TextView> = arrayOf(
             view.findViewById(R.id.tv_money),
             view.findViewById(R.id.tv_career),
             view.findViewById(R.id.tv_coworker),
@@ -76,9 +78,14 @@ class HomeFragment : Fragment() {
 
         carouselView.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
 
-            override fun onPageScrollStateChanged(state: Int) { }
+            override fun onPageScrollStateChanged(state: Int) {}
 
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) { }
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+            }
 
             override fun onPageSelected(position: Int) {
 
@@ -88,12 +95,12 @@ class HomeFragment : Fragment() {
 
         //버튼 하나만 선택할 수 있게 동작
         val clickListener = View.OnClickListener { v ->
-                val curText = v as TextView
-                for (i in tvArray) {
-                    if(curText == i) curText.isSelected = true
-                    else i.isSelected = false
-                }
+            val curText = v as TextView
+            for (i in tvArray) {
+                if (curText == i) curText.isSelected = true
+                else i.isSelected = false
             }
+        }
 
         tv_money.setOnClickListener(clickListener)
         tv_career.setOnClickListener(clickListener)
@@ -104,8 +111,8 @@ class HomeFragment : Fragment() {
 
         //투표 버튼 눌렀을 때
         tv_result.setOnClickListener {
-            for(i in tvArray) {
-                if(i.isSelected) {
+            for (i in tvArray) {
+                if (i.isSelected) {
                     poll_start.visibility = View.GONE
                     poll_result.visibility = View.VISIBLE
                     break
@@ -116,7 +123,7 @@ class HomeFragment : Fragment() {
         //추천인 RecyclerView에 어뎁터 연결
         recommendAdapter = RecommendAdapter(view.context)
         rv_recommend.adapter = recommendAdapter
-        loadRecommendPeople()
+        loadRecommendData()
 
         companyAdapter = CompanyAdapter(view.context)
         rv_company.adapter = companyAdapter //리사이클러뷰 어댑터를 insta Adapter로 지정
@@ -148,7 +155,7 @@ class HomeFragment : Fragment() {
         })
     }
 
-    private fun loadRecruitDatas(){
+    private fun loadRecruitDatas() {
         recruitDatas.apply {
             add(
                 RecruitData(
@@ -222,60 +229,25 @@ class HomeFragment : Fragment() {
     var imageListener =
         ImageListener { position, imageView -> imageView.setImageResource(bannerImages.get(position)) }
 
-    private fun loadRecommendPeople() {
-        recommendPeople.apply {
-            add(
-                RecommendPeople(
-                    img_profile = R.drawable.img_profile, name = "이정연", company = "SOPT"
-                )
-            )
-            add(
-                RecommendPeople(
-                    img_profile = R.drawable.img_profile, name = "이정연", company = "SOPT"
-                )
-            )
-            add(
-                RecommendPeople(
-                    img_profile = R.drawable.img_profile, name = "이정연", company = "SOPT"
-                )
-            )
-            add(
-                RecommendPeople(
-                    img_profile = R.drawable.img_profile, name = "이정연", company = "SOPT"
-                )
-            )
-            add(
-                RecommendPeople(
-                    img_profile = R.drawable.img_profile, name = "이정연", company = "SOPT"
-                )
-            )
-            add(
-                RecommendPeople(
-                    img_profile = R.drawable.img_profile, name = "이정연", company = "SOPT"
-                )
-            )
-            add(
-                RecommendPeople(
-                    img_profile = R.drawable.img_profile, name = "이정연", company = "SOPT"
-                )
-            )
-            add(
-                RecommendPeople(
-                    img_profile = R.drawable.img_profile, name = "이정연", company = "SOPT"
-                )
-            )
-            add(
-                RecommendPeople(
-                    img_profile = R.drawable.img_profile, name = "이정연", company = "SOPT"
-                )
-            )
-            add(
-                RecommendPeople(
-                    img_profile = R.drawable.img_profile, name = "이정연", company = "SOPT"
-                )
-            )
-        }
-        recommendAdapter.data = recommendPeople
-        recommendAdapter.notifyDataSetChanged()
+    private fun loadRecommendData() {
+        service.getRecommendPeople().enqueue(object : Callback<ResponseRecommendPeople> {
+            override fun onResponse(
+                call: Call<ResponseRecommendPeople>,
+                response: Response<ResponseRecommendPeople>
+            ) {
+                if (response.isSuccessful) {
+                    if (response.body()!!.success) {
+                        recommendPeople = response.body()!!.data as MutableList<RecommendPeople>
+                        recommendAdapter.data = recommendPeople
+                        recommendAdapter.notifyDataSetChanged()
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseRecommendPeople>, t: Throwable) {
+                Log.d("loadRecommendData", "Fail to request. $t")
+            }
+        })
+
     }
 }

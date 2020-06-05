@@ -2,6 +2,7 @@ package com.example.sopt_26_collaboration.network
 
 import com.example.sopt_26_collaboration.RecommendPeople
 import com.example.sopt_26_collaboration.data.ResponseContentData
+import com.example.sopt_26_collaboration.network.response.ResponseRecommendPeople
 import com.example.sopt_26_collaboration.network.response.ResponsePopularCompany
 import com.example.sopt_26_collaboration.network.response.ResponseFollowData
 import retrofit2.Call
@@ -16,7 +17,7 @@ interface RequestInterface {
     ): Call<ResponseContentData>
 
     @GET("/user/recommend/:uid")
-    fun getRecommendPeople(@Body body: RecommendPeople): Call<RecommendPeople>
+    fun getRecommendPeople() : Call<ResponseRecommendPeople>
 
     @GET("/company/popular/0")
     fun requestPopularCompany(): Call<ResponsePopularCompany>

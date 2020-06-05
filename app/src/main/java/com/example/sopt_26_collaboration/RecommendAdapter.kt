@@ -12,7 +12,7 @@ class RecommendAdapter(val context: Context) : RecyclerView.Adapter<RecommendVie
         return RecommendViewHolder(view)
     }
 
-    override fun getItemCount(): Int = 10
+    override fun getItemCount(): Int = data.size
 
     override fun onBindViewHolder(holder: RecommendViewHolder, position: Int) {
         holder.bind(data[position])
