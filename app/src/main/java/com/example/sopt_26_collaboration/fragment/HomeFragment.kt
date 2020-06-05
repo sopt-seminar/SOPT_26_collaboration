@@ -1,31 +1,38 @@
 package com.example.sopt_26_collaboration.fragment
 
+import android.content.ContentResolver
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.widget.TextView
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.core.net.toUri
+import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
+import com.bumptech.glide.Glide
 import com.example.sopt_26_collaboration.CompanyAdapter
-import com.example.sopt_26_collaboration.recyclerview.CompanyData
-import com.synnapps.carouselview.CarouselView
-import com.synnapps.carouselview.ImageListener
 import com.example.sopt_26_collaboration.R
 import com.example.sopt_26_collaboration.RecommendAdapter
 import com.example.sopt_26_collaboration.RecommendPeople
 import com.example.sopt_26_collaboration.network.RequestToServer
-import com.example.sopt_26_collaboration.network.response.ResponseRecommendPeople
-import com.example.sopt_26_collaboration.network.response.ResponsePopularCompany
 import com.example.sopt_26_collaboration.network.customEnqueue
+import com.example.sopt_26_collaboration.network.response.ResponsePopularCompany
+import com.example.sopt_26_collaboration.network.response.ResponseRecommendPeople
+import com.example.sopt_26_collaboration.recyclerview.CompanyData
 import com.example.sopt_26_collaboration.recyclerview.RecruitAdapter
 import com.example.sopt_semina_assignment.util.HorizontalItemDecorator
 import com.example.sopt_semina_assignment.util.VerticalItemDecorator
+import com.synnapps.carouselview.CarouselView
+import com.synnapps.carouselview.ImageListener
 import kotlinx.android.synthetic.main.fragment_home.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.InputStream
 
 
 /**
@@ -33,12 +40,6 @@ import retrofit2.Response
  */
 class HomeFragment : Fragment() {
     val requestToServer = RequestToServer
-
-    var bannerImages = intArrayOf(
-        R.drawable.carousel_design,
-        R.drawable.carousel_android,
-        R.drawable.carousel
-    )
 
     private lateinit var recommendAdapter: RecommendAdapter
     private lateinit var companyAdapter: CompanyAdapter
@@ -65,16 +66,28 @@ class HomeFragment : Fragment() {
             view.findViewById(R.id.tv_distance)
         )
 
-        val subtitleStrings = arrayOf(
-            "디자인 인재 영입 중",
-            "안드로이드 인재 영입 중",
-            "iOS 인재 영입 중"
-        )
-
         //carouselView 기능 구현
         val carouselView = view.findViewById(R.id.carousel) as CarouselView
+
+        var imageListener =
+            ImageListener { position, imageView -> run{
+                service.requestPopularCompany().customEnqueue(
+                    onError = {},
+                    onSuccess = {
+                        if(it.success)
+                            Glide.with(this).load(it.data[position+1].companyImg).into(imageView)
+                    }
+                )
+            } }
         carouselView.setImageListener(imageListener)
-        carouselView.pageCount = bannerImages.count()
+
+        service.requestPopularCompany().customEnqueue(
+            onError = {},
+            onSuccess = {
+                if(it.success)
+                    carouselView.pageCount = it.data.count()-1
+            }
+        )
 
         carouselView.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
 
@@ -88,8 +101,16 @@ class HomeFragment : Fragment() {
             }
 
             override fun onPageSelected(position: Int) {
-
-                tv_subtitle.text = subtitleStrings[position]
+                service.requestPopularCompany().customEnqueue(
+                    onError = {},
+                    onSuccess = {
+                        if(it.success) {
+                            tv_title.text = it.data[position+1].companyName
+                            tv_subtitle.text = it.data[position+1].companyTitle
+                        }
+                    }
+                )
+                //tv_subtitle.text = subtitleStrings[position]
             }
         })
 
@@ -160,9 +181,6 @@ class HomeFragment : Fragment() {
 
         })
     }
-
-    var imageListener =
-        ImageListener { position, imageView -> imageView.setImageResource(bannerImages.get(position)) }
 
     private fun loadRecommendData() {
         service.getRecommendPeople().enqueue(object : Callback<ResponseRecommendPeople> {
