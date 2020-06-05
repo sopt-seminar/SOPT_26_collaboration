@@ -18,8 +18,8 @@ import com.example.sopt_26_collaboration.RecommendPeople
 import com.example.sopt_26_collaboration.network.RequestToServer
 import com.example.sopt_26_collaboration.network.response.ResponseRecommendPeople
 import com.example.sopt_26_collaboration.network.response.ResponsePopularCompany
+import com.example.sopt_26_collaboration.network.customEnqueue
 import com.example.sopt_26_collaboration.recyclerview.RecruitAdapter
-import com.example.sopt_26_collaboration.recyclerview.RecruitData
 import com.example.sopt_semina_assignment.util.HorizontalItemDecorator
 import com.example.sopt_semina_assignment.util.VerticalItemDecorator
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -32,6 +32,7 @@ import retrofit2.Response
  * A simple [Fragment] subclass.
  */
 class HomeFragment : Fragment() {
+    val requestToServer = RequestToServer
 
     var bannerImages = intArrayOf(
         R.drawable.carousel_design,
@@ -45,7 +46,6 @@ class HomeFragment : Fragment() {
 
     private var recommendPeople = mutableListOf<RecommendPeople>()
     private var companyDatas =  mutableListOf<CompanyData>()
-    private val recruitDatas = mutableListOf<RecruitData>()
 
     private val service = RequestToServer.service
 
@@ -129,11 +129,17 @@ class HomeFragment : Fragment() {
         rv_company.adapter = companyAdapter //리사이클러뷰 어댑터를 insta Adapter로 지정
         loadCompanyDatas()
 
-        recruitAdapter = RecruitAdapter(view.context)
-        rv_recruit.adapter = recruitAdapter
-        rv_recruit.addItemDecoration(HorizontalItemDecorator(12))
-        rv_recruit.addItemDecoration(VerticalItemDecorator(16))
-        loadRecruitDatas()
+        requestToServer.service.requestRecruitInfo().customEnqueue(
+            onError = { Log.d("recruit","올바르지 못한 요청")},
+            onSuccess = {
+                if(it.success){ //body()가 null이 아니고, success가 true -> 성공
+                    recruitAdapter = RecruitAdapter(view!!.context,it.data)
+                    rv_recruit.adapter = recruitAdapter
+                    rv_recruit.addItemDecoration(HorizontalItemDecorator(12))
+                    rv_recruit.addItemDecoration(VerticalItemDecorator(16))
+                }
+            }
+        )
     }
 
     private fun loadCompanyDatas(){
@@ -153,77 +159,6 @@ class HomeFragment : Fragment() {
             }
 
         })
-    }
-
-    private fun loadRecruitDatas() {
-        recruitDatas.apply {
-            add(
-                RecruitData(
-                    recruitImg = "",
-                    recruitField = "Front-End 개발자",
-                    recruitCompany = "카카오",
-                    recruitLocation = "서울•한국"
-                )
-            )
-            add(
-                RecruitData(
-                    recruitImg = "",
-                    recruitField = "Front-End 개발자",
-                    recruitCompany = "카카오",
-                    recruitLocation = "서울•한국"
-                )
-            )
-            add(
-                RecruitData(
-                    recruitImg = "",
-                    recruitField = "Front-End 개발자",
-                    recruitCompany = "카카오",
-                    recruitLocation = "서울•한국"
-                )
-            )
-            add(
-                RecruitData(
-                    recruitImg = "",
-                    recruitField = "Front-End 개발자",
-                    recruitCompany = "카카오",
-                    recruitLocation = "서울•한국"
-                )
-            )
-            add(
-                RecruitData(
-                    recruitImg = "",
-                    recruitField = "Front-End 개발자",
-                    recruitCompany = "카카오",
-                    recruitLocation = "서울•한국"
-                )
-            )
-            add(
-                RecruitData(
-                    recruitImg = "",
-                    recruitField = "Front-End 개발자",
-                    recruitCompany = "카카오",
-                    recruitLocation = "서울•한국"
-                )
-            )
-            add(
-                RecruitData(
-                    recruitImg = "",
-                    recruitField = "Front-End 개발자",
-                    recruitCompany = "카카오",
-                    recruitLocation = "서울•한국"
-                )
-            )
-            add(
-                RecruitData(
-                    recruitImg = "",
-                    recruitField = "Front-End 개발자",
-                    recruitCompany = "카카오",
-                    recruitLocation = "서울•한국"
-                )
-            )
-        }
-        recruitAdapter.datas = recruitDatas
-        recruitAdapter.notifyDataSetChanged()
     }
 
     var imageListener =
@@ -248,6 +183,5 @@ class HomeFragment : Fragment() {
                 Log.d("loadRecommendData", "Fail to request. $t")
             }
         })
-
     }
 }

@@ -5,9 +5,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sopt_26_collaboration.R
+import com.example.sopt_26_collaboration.data.RecruitData
 
-class RecruitAdapter(private val context: Context) : RecyclerView.Adapter<RecruitViewHolder>() {
-    var datas = mutableListOf<RecruitData>()
+class RecruitAdapter(private val context: Context, val datas : List<RecruitData>) : RecyclerView.Adapter<RecruitViewHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecruitViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.recruit_item,parent,false)
         return RecruitViewHolder(view)
