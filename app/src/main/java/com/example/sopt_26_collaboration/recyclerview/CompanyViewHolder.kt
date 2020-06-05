@@ -4,13 +4,20 @@ import android.graphics.Color
 import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.shapes.OvalShape
 import android.os.Build
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.sopt_26_collaboration.network.RequestToServer
+import com.example.sopt_26_collaboration.network.response.FollowResponse
 import com.example.sopt_26_collaboration.recyclerview.CompanyData
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class CompanyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val img_company = itemView.findViewById<ImageView>(R.id.img_company)
@@ -26,17 +33,46 @@ class CompanyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         img_company.clipToOutline = true
         Glide.with(img_company).load(companyData.companyImg).into(img_company)
 
-        companyData.isFollowed.let { switchFollowState(txt_comany_follow, it) }
+        var isFollowed = companyData.companyFollow != 0
+
+        switchFollowState(txt_comany_follow, isFollowed)
 
         txt_comany_follow.setOnClickListener {
-            switchFollowState(txt_comany_follow, !companyData.isFollowed)
+            switchFollowState(txt_comany_follow, !isFollowed)
 
-            companyData.isFollowed = !companyData.isFollowed
+            companyData.companyFollow = if (companyData.companyFollow == 0) {
+                1
+            } else {
+                0
+            }
 
-            //Todo: 변경된 데이터 서버에 업데이트
+            val service = RequestToServer.service
+
+            service.setFollow(companyData.companyId, companyData.companyFollow).enqueue(object : Callback<FollowResponse> {
+
+                override fun onFailure(call: Call<FollowResponse>, t: Throwable) {
+                    Toast.makeText(itemView.context.applicationContext, "잠시후 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+
+                    switchFollowState(txt_comany_follow, !isFollowed)
+
+                    companyData.companyFollow = if (companyData.companyFollow == 0) {
+                        1
+                    } else {
+                        0
+                    }
+                }
+
+                override fun onResponse(call: Call<FollowResponse>, response: Response<FollowResponse>) {
+                    if (response.isSuccessful) {
+                        if (response.body()!!.success) {
+                            Log.d("FollowClickListener",
+                                "success. ${response.body()!!.data[0].companyName} : ${response.body()!!.data[0].companyFollow}")
+                        }
+                    }
+                }
+            })
         }
     }
-
 
     private fun switchFollowState(view: TextView, isFollowed: Boolean) {
         if (isFollowed) {
