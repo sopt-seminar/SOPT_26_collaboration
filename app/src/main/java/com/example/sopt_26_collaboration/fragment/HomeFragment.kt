@@ -1,6 +1,5 @@
 package com.example.sopt_26_collaboration.fragment
 
-import android.app.DownloadManager
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
@@ -16,9 +15,8 @@ import com.synnapps.carouselview.ImageListener
 import com.example.sopt_26_collaboration.R
 import com.example.sopt_26_collaboration.RecommendAdapter
 import com.example.sopt_26_collaboration.RecommendPeople
-import com.example.sopt_26_collaboration.network.RequestInterface
 import com.example.sopt_26_collaboration.network.RequestToServer
-import com.example.sopt_26_collaboration.network.response.CompanyResponse
+import com.example.sopt_26_collaboration.network.response.ResponsePopularCompany
 import com.example.sopt_26_collaboration.recyclerview.RecruitAdapter
 import com.example.sopt_26_collaboration.recyclerview.RecruitData
 import com.example.sopt_semina_assignment.util.HorizontalItemDecorator
@@ -27,7 +25,6 @@ import kotlinx.android.synthetic.main.fragment_home.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.*
 
 
 /**
@@ -133,12 +130,12 @@ class HomeFragment : Fragment() {
     }
 
     private fun loadCompanyDatas(){
-        service.getPopularCompany().enqueue(object: Callback<CompanyResponse> {
-            override fun onFailure(call: Call<CompanyResponse>, t: Throwable) {
+        service.requestPopularCompany().enqueue(object: Callback<ResponsePopularCompany> {
+            override fun onFailure(call: Call<ResponsePopularCompany>, t: Throwable) {
                 Log.d("loadComanyDatas()", "Fail to load company. $t")
             }
 
-            override fun onResponse(call: Call<CompanyResponse>, response: Response<CompanyResponse>) {
+            override fun onResponse(call: Call<ResponsePopularCompany>, response: Response<ResponsePopularCompany>) {
                 if (response.isSuccessful) {
                     if (response.body()!!.success) {
                         companyDatas = response.body()!!.data as MutableList<CompanyData>

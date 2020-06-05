@@ -13,7 +13,7 @@ import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.sopt_26_collaboration.network.RequestToServer
-import com.example.sopt_26_collaboration.network.response.FollowResponse
+import com.example.sopt_26_collaboration.network.response.ResponseFollowData
 import com.example.sopt_26_collaboration.recyclerview.CompanyData
 import retrofit2.Call
 import retrofit2.Callback
@@ -48,9 +48,9 @@ class CompanyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
             val service = RequestToServer.service
 
-            service.setFollow(companyData.companyId, companyData.companyFollow).enqueue(object : Callback<FollowResponse> {
+            service.requestPutFollow(companyData.companyId, companyData.companyFollow).enqueue(object : Callback<ResponseFollowData> {
 
-                override fun onFailure(call: Call<FollowResponse>, t: Throwable) {
+                override fun onFailure(call: Call<ResponseFollowData>, t: Throwable) {
                     Toast.makeText(itemView.context.applicationContext, "잠시후 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
 
                     switchFollowState(txt_comany_follow, !isFollowed)
@@ -62,7 +62,7 @@ class CompanyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                     }
                 }
 
-                override fun onResponse(call: Call<FollowResponse>, response: Response<FollowResponse>) {
+                override fun onResponse(call: Call<ResponseFollowData>, response: Response<ResponseFollowData>) {
                     if (response.isSuccessful) {
                         if (response.body()!!.success) {
                             Log.d("FollowClickListener",
