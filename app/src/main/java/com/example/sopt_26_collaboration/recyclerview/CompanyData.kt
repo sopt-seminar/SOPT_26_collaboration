@@ -12,5 +12,7 @@ data class CompanyData(
     @SerializedName("company_industry")
     val companyInfo: String,
     @SerializedName("company_follow")
-    var companyFollow: Int
+    var companyFollow: Int,
+    @SerializedName("carousel_view_title")
+    val companyTitle: String?
 )
