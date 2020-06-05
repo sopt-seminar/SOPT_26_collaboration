@@ -1,12 +1,10 @@
 package com.example.sopt_26_collaboration.recyclerview
 
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.example.sopt_26_collaboration.CompanyData
 import com.example.sopt_26_collaboration.R
 import java.lang.Integer.parseInt
 

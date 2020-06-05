@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager.widget.ViewPager
 import com.example.sopt_26_collaboration.CompanyAdapter
-import com.example.sopt_26_collaboration.CompanyData
+import com.example.sopt_26_collaboration.recyclerview.CompanyData
 import com.synnapps.carouselview.CarouselView
 import com.synnapps.carouselview.ImageListener
 import com.example.sopt_26_collaboration.R
@@ -17,6 +17,7 @@ import com.example.sopt_26_collaboration.RecommendAdapter
 import com.example.sopt_26_collaboration.RecommendPeople
 import com.example.sopt_26_collaboration.network.RequestToServer
 import com.example.sopt_26_collaboration.network.response.ResponseRecommendPeople
+import com.example.sopt_26_collaboration.network.response.ResponsePopularCompany
 import com.example.sopt_26_collaboration.recyclerview.RecruitAdapter
 import com.example.sopt_26_collaboration.recyclerview.RecruitData
 import com.example.sopt_semina_assignment.util.HorizontalItemDecorator
@@ -43,16 +44,13 @@ class HomeFragment : Fragment() {
     private lateinit var recruitAdapter: RecruitAdapter
 
     private var recommendPeople = mutableListOf<RecommendPeople>()
-    private val companyDatas = mutableListOf<CompanyData>()
+    private var companyDatas =  mutableListOf<CompanyData>()
     private val recruitDatas = mutableListOf<RecruitData>()
 
     private val service = RequestToServer.service
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
@@ -138,60 +136,23 @@ class HomeFragment : Fragment() {
         loadRecruitDatas()
     }
 
-    private fun loadCompanyDatas() {
-        companyDatas.apply {
-            add(
-                CompanyData(
-                    companyImg = "https://cdn.pixabay.com/photo/2020/04/19/08/17/watercolor-5062356__480.jpg",
-                    companyName = "카카오",
-                    companyInfo = "IT, 컨텐츠"
-                )
-            )
-            add(
-                CompanyData(
-                    companyImg = "https://cdn.pixabay.com/photo/2020/04/19/08/17/watercolor-5062356__480.jpg",
-                    companyName = "카카오",
-                    companyInfo = "IT, 컨텐츠"
-                )
-            )
-            add(
-                CompanyData(
-                    companyImg = "https://cdn.pixabay.com/photo/2020/04/19/08/17/watercolor-5062356__480.jpg",
-                    companyName = "카카오",
-                    companyInfo = "IT, 컨텐츠"
-                )
-            )
-            add(
-                CompanyData(
-                    companyImg = "https://cdn.pixabay.com/photo/2020/04/19/08/17/watercolor-5062356__480.jpg",
-                    companyName = "카카오",
-                    companyInfo = "IT, 컨텐츠"
-                )
-            )
-            add(
-                CompanyData(
-                    companyImg = "https://cdn.pixabay.com/photo/2020/04/19/08/17/watercolor-5062356__480.jpg",
-                    companyName = "카카오",
-                    companyInfo = "IT, 컨텐츠"
-                )
-            )
-            add(
-                CompanyData(
-                    companyImg = "https://cdn.pixabay.com/photo/2020/04/19/08/17/watercolor-5062356__480.jpg",
-                    companyName = "카카오",
-                    companyInfo = "IT, 컨텐츠"
-                )
-            )
-            add(
-                CompanyData(
-                    companyImg = "https://cdn.pixabay.com/photo/2020/04/19/08/17/watercolor-5062356__480.jpg",
-                    companyName = "카카오",
-                    companyInfo = "IT, 컨텐츠"
-                )
-            )
-        }
-        companyAdapter.datas = companyDatas
-        companyAdapter.notifyDataSetChanged()
+    private fun loadCompanyDatas(){
+        service.requestPopularCompany().enqueue(object: Callback<ResponsePopularCompany> {
+            override fun onFailure(call: Call<ResponsePopularCompany>, t: Throwable) {
+                Log.d("loadComanyDatas()", "Fail to load company. $t")
+            }
+
+            override fun onResponse(call: Call<ResponsePopularCompany>, response: Response<ResponsePopularCompany>) {
+                if (response.isSuccessful) {
+                    if (response.body()!!.success) {
+                        companyDatas = response.body()!!.data as MutableList<CompanyData>
+                    }
+                }
+                companyAdapter.datas = companyDatas
+                companyAdapter.notifyDataSetChanged()
+            }
+
+        })
     }
 
     private fun loadRecruitDatas() {
@@ -287,5 +248,6 @@ class HomeFragment : Fragment() {
                 Log.d("loadRecommendData", "Fail to request. $t")
             }
         })
+
     }
 }

@@ -1,10 +1,12 @@
 package com.example.sopt_26_collaboration.network
 
+import com.example.sopt_26_collaboration.RecommendPeople
 import com.example.sopt_26_collaboration.data.ResponseContentData
 import com.example.sopt_26_collaboration.network.response.ResponseRecommendPeople
+import com.example.sopt_26_collaboration.network.response.ResponsePopularCompany
+import com.example.sopt_26_collaboration.network.response.ResponseFollowData
 import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface RequestInterface {
 
@@ -16,4 +18,14 @@ interface RequestInterface {
 
     @GET("/user/recommend/:uid")
     fun getRecommendPeople() : Call<ResponseRecommendPeople>
+
+    @GET("/company/popular/0")
+    fun requestPopularCompany(): Call<ResponsePopularCompany>
+
+    @Headers("Content-Type:application/json")
+    @PUT("/company/following/{company_idx}/{company_follow}")
+    fun requestPutFollow(
+        @Path("company_idx") company_idx: Int,
+        @Path("company_follow") company_follow: Int
+    ): Call<ResponseFollowData>
 }
